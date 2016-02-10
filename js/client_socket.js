@@ -21,15 +21,20 @@
 
 			if ( response instanceof Error ) throw(Error);
 
-               // post
-			if( storageDeferred[response.token] ) {            // если с сервера приходит ответ на пост
-                                                               // то проверяем наличие именно этого token и
-				storageDeferred[response.token].defer.resolve( response.data ); // и возвращаем promise с данными
+          // post
+          // если с сервера приходит ответ на пост
+					// то проверяем наличие именно этого token и
+					// и возвращаем promise с данными
+			if( storageDeferred[response.token] ) {
+
+				storageDeferred[response.token].defer.resolve( response.data );
 				delete storageDeferred[response.token];
 
 			}else{
-				// eventName                                            // если пришли данные с eventName,то
-				pubsub.publish( response.eventName, response.data );    // публикуем их ( pubsub )
+				// eventName
+				// если пришли данные с eventName,то
+				// публикуем их ( pubsub )
+				pubsub.publish( response.eventName, response.data );
 			}
 		};
 
